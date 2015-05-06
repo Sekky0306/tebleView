@@ -27,6 +27,8 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    insertMode = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,8 +37,17 @@
 }
 
 - (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
+    if (insertMode==YES) {
+        blackview = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, 320)];
+        blackview.backgroundColor =[UIColor blackColor];
+        textField =[[UITextField alloc] initWithFrame:CGRectMake(25, 25, 270, 40)];
+        textField.backgroundColor=[UIColor whiteColor];
+        textField.delegate=self;
+        [blackview addSubview:textField];
+        [self.view addSubview:blackview];
+        insertMode = NO;
+    }else{
+        NSLog(@"insertmodeになっていません");
     }
     [self.objects insertObject:[NSDate date] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
